@@ -7,7 +7,11 @@ TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 URL = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
-message = "Olá, sou o seu robô de ofertas!"
+product_name = "Fone de Ouvido Bluetooth"
+product_price = 199.90
+product_link = "https://exemplo.com/fone-bluetooth"
+formatted_price = f"{product_price:.2f}".replace(".", ",")
+message = f"{product_name} por R$ {formatted_price} - {product_link}"
 
 data = {
     "chat_id": CHAT_ID,
