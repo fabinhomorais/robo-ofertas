@@ -14,14 +14,19 @@ def format_offer(name, price, link):
     return f"🔥 {name}\n💰 Por R$ {formatted_price}\n🛒 {link}"
 
 
+def send_telegram_message(text):
+    data = {
+        "chat_id": CHAT_ID,
+        "text": text
+    }
+    response = requests.post(URL, data=data)
+    return response.status_code
+
+
 product_name = "Fone de Ouvido Bluetooth"
 product_price = 199.90
 product_link = "https://exemplo.com/fone-bluetooth"
 message = format_offer(name=product_name, price=product_price, link=product_link)
 
-data = {
-    "chat_id": CHAT_ID,
-    "text": message
-}
-response = requests.post(URL, data=data)
-print(response.status_code)
+status_code = send_telegram_message(text=message)
+print(status_code)
