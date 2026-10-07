@@ -7,6 +7,7 @@ TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 URL = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+MIN_DISCOUNT = 0.10
 
 
 def format_offer(name, price, link):
@@ -21,6 +22,13 @@ def send_telegram_message(text):
     }
     response = requests.post(URL, data=data)
     return response.status_code
+
+
+def is_good_deal(current_price, usual_price):
+    if usual_price <= 0:
+        return False
+    discount = (usual_price - current_price) / usual_price
+    return discount >= MIN_DISCOUNT
 
 
 product_name = "Fone de Ouvido Bluetooth"
