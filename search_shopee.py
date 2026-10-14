@@ -12,8 +12,8 @@ SECRET = os.getenv("SHOPEE_SECRET")
 SHOPEE_API_URL = "https://open-api.affiliate.shopee.com.br/graphql"
 
 OFFERS_QUERY = """
-{
-  productOfferV2(keyword: "fone bluetooth", limit: 3) {
+query ($keyword: String, $limit: Int) {
+  productOfferV2(keyword: $keyword, limit: $limit) {
     nodes {
       productName
       priceMin
@@ -25,8 +25,8 @@ OFFERS_QUERY = """
 """
 
 
-def search_shopee_offers():
-    payload = json.dumps({"query": OFFERS_QUERY})
+def search_shopee_offers(keyword, limit=3):
+    payload = json.dumps({"query": OFFERS_QUERY, "variables": {"keyword": keyword, "limit": limit}})
     timestamp = int(time.time())
     text_to_sign = f"{APP_ID}{timestamp}{payload}{SECRET}"
     signature = hashlib.sha256(text_to_sign.encode()).hexdigest()
@@ -51,4 +51,4 @@ def search_shopee_offers():
     return normalized_offers
 
 
-print(search_shopee_offers())
+print(search_shopee_offers("mouse gamer", limit=2))
