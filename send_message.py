@@ -2,6 +2,8 @@ import requests
 from dotenv import load_dotenv
 import os
 
+from search_shopee import search_shopee_offers
+
 load_dotenv()
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
@@ -31,10 +33,8 @@ def is_good_deal(current_price, usual_price):
     return discount >= MIN_DISCOUNT
 
 
-product_name = "Fone de Ouvido Bluetooth"
-product_price = 199.90
-product_link = "https://exemplo.com/fone-bluetooth"
-message = format_offer(name=product_name, price=product_price, link=product_link)
-
+offers = search_shopee_offers("fone bluetooth", limit=1)
+offer = offers[0]
+message = format_offer(name=offer["name"], price=offer["price"], link=offer["link"])
 status_code = send_telegram_message(text=message)
 print(status_code)

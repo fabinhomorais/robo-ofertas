@@ -51,4 +51,5 @@ def search_shopee_offers(keyword, limit=3):
     return normalized_offers
 
 
-print(search_shopee_offers("mouse gamer", limit=2))
+if __name__ == "__main__":
+    print(search_shopee_offers("mouse gamer", limit=2))
